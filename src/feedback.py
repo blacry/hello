@@ -1,7 +1,8 @@
+import mysql.connector as sqlcon
 def provide_feedback():
     print('please provide us your valuable feedback')
 
-    email = emailfxn()     #:3
+    email = emailfxn()
     rating = ratingfxn()
     feedback = feedbackfxn()
 
@@ -44,13 +45,13 @@ def feedbackfxn():
         print("Thank you for providing feedback!")
         return feedbacks
 
-def insertFeedback(email , rating, feedback , roomno = 5 ) :
+def insertFeedback(email , rating, feedback , roomno ) :
 
     import mysql.connector as sqlcon
     con=sqlcon.connect(host="localhost",user="root",passwd="12345",database='swaraj_hotel',auth_plugin="mysql_native_password")
     cursor=con.cursor()
 
-    query = 'select c_id from customerinfo natural join rooms where email = {} and roomno = {}'.format( email, roomno)
+    query = 'select c_id from customerinfo natural join roomsinfo where email = {} and roomno = {}'.format( email, roomno)
     cursor.execute(query)
     c_id=cursor.fetchall()
     c_id=c_id[0]
@@ -64,5 +65,5 @@ def viewFeedBack():
     con=sqlcon.connect(host="localhost",user="root",passwd="12345",database='swaraj_hotel',auth_plugin="mysql_native_password")
     cursor=con.cursor()
     cursor.execute('select * from feedback')
-    for i in cursor.fetchall():
+    for i in cursor.fetchall(): 
         print(i)

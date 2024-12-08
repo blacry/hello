@@ -1,7 +1,7 @@
 import misc
 import room_perks
 import Bill
- 
+import rooms 
 def room_booking():
     print('What kind of room do you want to book?')
     print('1.Single Room')
@@ -13,7 +13,7 @@ def room_booking():
     
     room_choice=input('Enter your choice:')
     if room_choice:
-        price = priceDetails(int(room_choice))
+        price,roomno = priceDetails(int(room_choice))
     else:
         room_perks.perks()
         room_booking()
@@ -27,13 +27,14 @@ def room_booking():
     cursor.execute(query)
     con.commit()
     
+    rooms.roomassigner(roomno,cid,customer_check_out)
     Bill.bill(cid,customer_name,customer_email,customer_phone,customer_check_in,customer_check_out,price)
-
 def priceDetails(choice):
     if choice==1:
         a = input('Your room will be of ₹ 1000 , Press 1 to confirm & Press 2 to cancel')
         if int(a) == 1:
-            return 1000
+            room_no=rooms.roomfinder(choice)
+            return 1000,room_no
         
         elif int(a) == 2:
             print('Request cancelled')
@@ -44,7 +45,8 @@ def priceDetails(choice):
     if choice==2:
         a = input('Your room will be of ₹ 2000 , Press 1 to confirm & Press 2 to cancel ')
         if int(a) == 1:
-            return 2000
+            room_no=rooms.roomfinder(choice)
+            return 2000,room_no
         elif int(a) == 2:
             print('Request cancelled')
             room_booking()
@@ -54,7 +56,8 @@ def priceDetails(choice):
     if choice==3:
         a = input('Your room will be of ₹ 4000 , Press 1 to confirm & Press 2 to cancel ')  
         if int(a) == 1:
-            return 4000
+            room_no=rooms.roomfinder(choice)
+            return 4000,room_no
         elif int(a) == 2:
             print('Request cancelled')
             room_booking()
@@ -64,7 +67,8 @@ def priceDetails(choice):
     if choice==4:
         a = input('Your room will be of ₹ 6000 , Press 1 to confirm & Press 2 to cancel ')
         if int(a) == 1:
-            return 6000
+            room_no=rooms.roomfinder(choice)
+            return 6000,room_no
         elif int(a) == 2:
             print('Request cancelled')
             room_booking()
@@ -73,7 +77,8 @@ def priceDetails(choice):
     if choice==5:
         a = input('Your room will be of ₹ 10000 , Press 1 to confirm & Press 2 to cancel ')
         if int(a) == 1:
-            return 10000
+            room_no=rooms.roomfinder(choice)
+            return 10000,room_no
         elif int(a) == 2:
             print('Request cancelled')
             room_booking()
@@ -81,6 +86,7 @@ def priceDetails(choice):
             priceDetails(choice)
     else:
         misc.correct(room_booking)
+   
 
 def customerDetails():
     while True:
